@@ -599,7 +599,11 @@
                         metrics.totalTokens = metrics.inputTokens + metrics.outputTokens;
                         updateMetrics();
                         
-                        logEvent('USAGE', 'info', `Tokens: +${inputTokens} in, +${outputTokens} out (total: ${data.totalTokens || 0})`, data);
+                        // Sanitize values to prevent format string injection
+                        const safeInputTokens = Number(inputTokens) || 0;
+                        const safeOutputTokens = Number(outputTokens) || 0;
+                        const safeTotalTokens = Number(data.totalTokens) || 0;
+                        logEvent('USAGE', 'info', `Tokens: +${safeInputTokens} in, +${safeOutputTokens} out (total: ${safeTotalTokens})`, data);
                     }
                     // Silent events, just log to console
                     console.log(type, data);
