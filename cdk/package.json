@@ -19,7 +19,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.19.20",
-    "aws-cdk": "^2.1030.0",
+    "aws-cdk": "^2.239.0",
     "source-map-support": "^0.5.21",
     "typescript": "^5.9.3",
     "@cloudscape-design/chat-components": "^1.0.67",
@@ -28,7 +28,11 @@
     "@cloudscape-design/global-styles": "^1.0.46"
   },
   "dependencies": {
-    "aws-cdk-lib": "^2.219.0",
+    "aws-cdk-lib": "^2.239.0",
     "constructs": "^10.4.2"
+  },
+  "overrides": {
+    "minimatch": ">=10.2.1",
+    "ajv": ">=8.18.0"
   }
 }
