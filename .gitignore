@@ -4,6 +4,12 @@
 *.d.ts
 node_modules
 
+# TypeScript compilation outputs
+cdk/lib/*.js
+cdk/lib/*.js.map
+cdk/bin/*.js
+cdk/bin/*.js.map
+
 # CDK asset staging directory
 .cdk.staging
 cdk.out*
@@ -24,6 +30,7 @@ lambda/*/dist/
 .env.*.local
 .deployment-info.env
 !.env.example
+!.env.local.example
 !.env.production
 
 # Python
