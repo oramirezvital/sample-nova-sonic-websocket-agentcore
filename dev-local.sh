@@ -154,12 +154,13 @@ if [ -f "frontend/.env.production.local" ]; then
     rm frontend/.env.production.local
 fi
 
-cat > frontend/.env.local << EOF
+cat > frontend/.env.development.local << EOF
 VITE_LOCAL_DEV=true
 VITE_AGENT_RUNTIME_URL=/api/ws
 EOF
 
 echo -e "\033[0;32m      ✓ Created local development environment configuration\033[0m"
+echo -e "\033[0;90m      Note: .env.local preserved for debug settings (if exists)\033[0m"
 
 # Step 8: Start services
 echo -e "\n\033[0;33m[8/8] Starting local development services...\033[0m"

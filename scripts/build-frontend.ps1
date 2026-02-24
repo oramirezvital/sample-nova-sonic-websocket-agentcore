@@ -12,9 +12,7 @@ param(
     [string]$AgentRuntimeArn,
     
     [Parameter(Mandatory=$true)]
-    [string]$Region,
-
-    [switch]$EnableDebug = $false
+    [string]$Region
 )
 
 Write-Host "Building frontend with:"
@@ -24,14 +22,12 @@ Write-Host "  Identity Pool ID: $IdentityPoolId"
 Write-Host "  Agent Runtime ARN: $AgentRuntimeArn"
 Write-Host "  Region: $Region"
 
-# Create production environment file (overrides .env.local)
+# Create production environment file
 Set-Location frontend
 
-# Remove local development environment file if it exists
-if (Test-Path ".env.local") {
-    Write-Host "Removing local development environment file..."
-    Remove-Item ".env.local"
-}
+# Note: .env.local is preserved if it exists (used for debug settings like VITE_WS_DEBUG)
+# Vite build precedence: .env.local > .env.production.local > .env.production > .env
+# This allows debug settings to persist across builds without being overwritten
 
 # Create production environment file
 @"
@@ -41,7 +37,6 @@ VITE_IDENTITY_POOL_ID=$IdentityPoolId
 VITE_AGENT_RUNTIME_ARN=$AgentRuntimeArn
 VITE_REGION=$Region
 VITE_LOCAL_DEV=false
-VITE_WS_DEBUG=$($EnableDebug.IsPresent.ToString().ToLower())
 "@ | Out-File -FilePath ".env.production.local" -Encoding UTF8
 
 Write-Host "Created production environment configuration"

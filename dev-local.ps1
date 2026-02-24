@@ -176,9 +176,10 @@ if (Test-Path "frontend/.env.production.local") {
 @"
 VITE_LOCAL_DEV=true
 VITE_AGENT_RUNTIME_URL=/api/ws
-"@ | Out-File -FilePath "frontend/.env.local" -Encoding UTF8
+"@ | Out-File -FilePath "frontend/.env.development.local" -Encoding UTF8
 
 Write-Host "      ✓ Created local development environment configuration" -ForegroundColor Green
+Write-Host "      Note: .env.local preserved for debug settings (if exists)" -ForegroundColor DarkGray
 
 # Step 8: Start services
 Write-Host "`n[8/8] Starting local development services..." -ForegroundColor Yellow

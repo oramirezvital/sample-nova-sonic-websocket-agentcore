@@ -109,24 +109,6 @@ If the frontend shows 401 errors:
 
 ## WebSocket Connection Errors
 
-### Enabling WebSocket Debug Logging
-
-Before diving into specific errors, you can enable verbose WebSocket logging in the browser console to see exactly what's happening during connection and message handling.
-
-Use the `-Debug` flag when building the frontend:
-
-**Windows (PowerShell):**
-```powershell
-.\scripts\build-frontend.ps1 -UserPoolId <id> -UserPoolClientId <id> -IdentityPoolId <id> -AgentRuntimeArn <arn> -Region <region> -EnableDebug
-```
-
-**macOS/Linux (Bash):**
-```bash
-./scripts/build-frontend.sh <userPoolId> <userPoolClientId> <identityPoolId> <agentRuntimeArn> <region> true
-```
-
-Then redeploy the frontend stack. With debug enabled you'll see detailed logs for presigned URL generation, AWS credential exchange, connection lifecycle, session IDs, and audio chunk sending. Errors always appear in the console regardless of this flag.
-
 ---
 
 ### "Connection closed unexpectedly (code 1006)"
@@ -257,6 +239,73 @@ Check:
 ---
 
 ## Frontend Issues
+
+### Enabling Frontend Debug Logging
+
+If you're experiencing issues with the frontend (WebSocket connections, audio processing, authentication, etc.), you can enable comprehensive debug logging in the browser console.
+
+**Step 1: Copy the debug configuration template**
+
+**Windows (PowerShell):**
+```powershell
+Copy-Item frontend/.env.local.example frontend/.env.local
+```
+
+**macOS/Linux (Bash):**
+```bash
+cp frontend/.env.local.example frontend/.env.local
+```
+
+**Step 2: Enable debug mode**
+
+Edit `frontend/.env.local` and change:
+```
+VITE_WS_DEBUG=false
+```
+to:
+```
+VITE_WS_DEBUG=true
+```
+
+**Step 3: Rebuild and redeploy (or restart local dev)**
+
+**For deployed version:**
+
+**Windows (PowerShell):**
+```powershell
+cd frontend
+npm run build
+cd ..\cdk
+npx cdk deploy AgentCoreNovaSonicBidiFrontend --no-cli-pager
+```
+
+**macOS/Linux (Bash):**
+```bash
+cd frontend
+npm run build
+cd ../cdk
+npx cdk deploy AgentCoreNovaSonicBidiFrontend --no-cli-pager
+```
+
+**For local development:**
+
+Just restart the `dev-local` script - the debug setting in `.env.local` is automatically applied.
+
+**What gets logged with debug enabled:**
+- AWS credential exchange and token refresh
+- WebSocket presigned URL generation
+- Connection lifecycle (open, close, errors)
+- Session IDs and connection metadata
+- Audio chunk processing and transmission
+- Real-time audio buffer states
+
+**Important notes:**
+- `.env.local` is preserved by both `dev-local` and `build-frontend` scripts
+- Debug settings work in both local development and production builds
+- Errors always appear in the console regardless of this flag
+- Debug mode adds verbose operational logging to help diagnose issues
+
+**To disable debug logging:** Change `VITE_WS_DEBUG=true` back to `false` in `frontend/.env.local` and rebuild/redeploy (or restart local dev).
 
 ### Frontend shows blank page
 
