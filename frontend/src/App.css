@@ -45,7 +45,7 @@
 }
 
 .stori-nav__logo {
-  height: 28px;
+  height: 40px;
   width: auto;
 }
 
@@ -443,6 +443,35 @@
   height: 12px;
   background: #E53935;
   border-radius: 2px;
+}
+
+/* ---- FORMATTED TEXT IN BUBBLES ---- */
+.stori-formatted {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stori-formatted__line {
+  margin: 0;
+}
+
+.stori-formatted__bullet {
+  padding-left: 8px;
+  position: relative;
+}
+
+.stori-formatted strong {
+  font-weight: 700;
+  color: inherit;
+}
+
+.stori-bubble--assistant .stori-formatted strong {
+  color: var(--stori-teal);
+}
+
+.stori-bubble--user .stori-formatted strong {
+  color: var(--stori-text-inverse);
 }
 
 /* ---- POWERED BY FOOTER ---- */

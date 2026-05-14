@@ -2,6 +2,36 @@ import { useState, useEffect, useRef } from 'react';
 import { useVoiceAgent } from './hooks/useVoiceAgent';
 import './App.css';
 
+/** Simple markdown-like formatter for chat bubbles */
+function FormattedText({ text }: { text: string }) {
+  // Split by newlines first
+  const lines = text.split('\n');
+  
+  return (
+    <div className="stori-formatted">
+      {lines.map((line, i) => {
+        if (!line.trim()) return <br key={i} />;
+        
+        // Process inline formatting: **bold**
+        const parts = line.split(/(\*\*[^*]+\*\*)/g);
+        const formatted = parts.map((part, j) => {
+          if (part.startsWith('**') && part.endsWith('**')) {
+            return <strong key={j}>{part.slice(2, -2)}</strong>;
+          }
+          return <span key={j}>{part}</span>;
+        });
+        
+        // Check if it's a bullet point
+        if (line.trim().startsWith('•') || line.trim().startsWith('-') || line.trim().startsWith('·')) {
+          return <div key={i} className="stori-formatted__bullet">{formatted}</div>;
+        }
+        
+        return <div key={i} className="stori-formatted__line">{formatted}</div>;
+      })}
+    </div>
+  );
+}
+
 function App() {
   const voiceAgent = useVoiceAgent();
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -101,7 +131,7 @@ function App() {
                     {turn.role === 'assistant' ? 'S' : '👤'}
                   </div>
                   <div className="stori-bubble__content">
-                    {turn.transcript}
+                    <FormattedText text={turn.transcript} />
                   </div>
                 </div>
               ))}

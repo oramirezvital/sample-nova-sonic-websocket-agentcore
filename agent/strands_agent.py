@@ -33,19 +33,18 @@ def consultar_saldo_y_pagos(cliente_id: str) -> str:
     Returns:
         Información del estado de cuenta del cliente
     """
-    # Simulated data for PoC demo
     return (
-        "Estado de cuenta de María García:\n"
-        "- Saldo actual: $4,850.00 MXN\n"
-        "- Límite de crédito: $12,000.00 MXN\n"
-        "- Crédito disponible: $7,150.00 MXN\n"
-        "- Fecha de corte: 15 de cada mes\n"
-        "- Fecha límite de pago: 5 de cada mes\n"
-        "- Pago mínimo: $485.00 MXN\n"
-        "- Pago para no generar intereses: $4,850.00 MXN\n"
-        "- Próximo pago vence: 5 de julio de 2025\n"
-        "- Tasa de interés anual: 59.9%\n"
-        "- Días restantes para pagar: 12 días"
+        "Estado de cuenta de María García: "
+        "Saldo actual: 4,850 pesos. "
+        "Límite de crédito: 12,000 pesos. "
+        "Crédito disponible: 7,150 pesos. "
+        "Fecha de corte: 15 de cada mes. "
+        "Fecha límite de pago: 5 de cada mes. "
+        "Pago mínimo: 485 pesos. "
+        "Pago para no generar intereses: 4,850 pesos. "
+        "Próximo pago vence: 5 de julio de 2025. "
+        "Tasa de interés anual: 59.9%. "
+        "Días restantes para pagar: 12 días."
     )
 
 @tool
@@ -60,16 +59,16 @@ def consultar_historial_crediticio(cliente_id: str) -> str:
         Resumen del historial crediticio y score
     """
     return (
-        "Historial crediticio de María García:\n"
-        "- Score Buró de Crédito: 620 (Regular - en mejora)\n"
-        "- Score hace 6 meses: 580\n"
-        "- Mejora: +40 puntos en 6 meses\n"
-        "- Meses consecutivos pagando a tiempo: 5\n"
-        "- Pagos atrasados últimos 12 meses: 1 (hace 7 meses)\n"
-        "- Utilización de crédito: 40% (recomendado: menos de 30%)\n"
-        "- Antigüedad de cuenta: 8 meses\n"
-        "- Siguiente meta: 650 puntos (buen historial)\n"
-        "- Consejo: Pagar más del mínimo y mantener utilización bajo 30% "
+        "Historial crediticio de María García: "
+        "Score Buró de Crédito: 620 (Regular, en mejora). "
+        "Score hace 6 meses: 580. "
+        "Mejora: +40 puntos en 6 meses. "
+        "Meses consecutivos pagando a tiempo: 5. "
+        "Pagos atrasados últimos 12 meses: 1 (hace 7 meses). "
+        "Utilización de crédito: 40% (recomendado: menos de 30%). "
+        "Antigüedad de cuenta: 8 meses. "
+        "Siguiente meta: 650 puntos (buen historial). "
+        "Consejo: Pagar más del mínimo y mantener utilización bajo 30% "
         "te ayudará a llegar a 650 en aproximadamente 3 meses."
     )
 
@@ -85,16 +84,16 @@ def consultar_cashback_y_recompensas(cliente_id: str) -> str:
         Información de cashback y recompensas disponibles
     """
     return (
-        "Recompensas de María García:\n"
-        "- Cashback acumulado este mes: $127.50 MXN\n"
-        "- Cashback total histórico: $890.00 MXN\n"
-        "- Categorías activas con cashback:\n"
-        "  • Supermercados: 5% (hasta $200 de cashback)\n"
-        "  • Gasolina: 3% (hasta $150 de cashback)\n"
-        "  • Compras en línea: 2% (sin límite)\n"
-        "- Categoría estrella esta semana: Farmacias 10% (válido hasta domingo)\n"
-        "- Próximo depósito de cashback: 16 de julio\n"
-        "- Tip: Usa tu Stori en farmacias esta semana para aprovechar el 10%."
+        "Recompensas de María García: "
+        "Cashback acumulado este mes: 127.50 pesos. "
+        "Cashback total histórico: 890 pesos. "
+        "Categorías activas con cashback: "
+        "Supermercados: 5% (hasta 200 pesos de cashback). "
+        "Gasolina: 3% (hasta 150 pesos de cashback). "
+        "Compras en línea: 2% (sin límite). "
+        "Categoría estrella esta semana: Farmacias 10% (válido hasta domingo). "
+        "Próximo depósito de cashback: 16 de julio. "
+        "Tip: Usa tu Stori en farmacias esta semana para aprovechar el 10%."
     )
 
 @tool
@@ -111,37 +110,44 @@ def simular_pago(monto: str, tipo_pago: str) -> str:
     """
     if monto == "pago_minimo" or monto == "485":
         return (
-            "Simulación - Pago mínimo ($485 MXN):\n"
-            "- Saldo restante: $4,365.00 MXN\n"
-            "- Intereses que se generarán: $217.50 MXN\n"
-            "- Nuevo saldo siguiente mes: $4,582.50 MXN\n"
-            "- Tiempo para liquidar (pagando solo mínimo): 14 meses\n"
-            "- Total que pagarías: $6,790.00 MXN (39% más)\n"
-            "- Impacto en score: Neutral (no sube ni baja)\n\n"
-            "⚠️ Recomendación: Si puedes pagar aunque sea $1,500, "
-            "reducirías los intereses a $133 y liquidarías en 4 meses."
+            "Simulación del pago mínimo de 485 pesos: "
+            "Saldo restante: 4,365 pesos. "
+            "Intereses que se generarán: 217.50 pesos. "
+            "Nuevo saldo siguiente mes: 4,582.50 pesos. "
+            "Tiempo para liquidar pagando solo mínimo: 14 meses. "
+            "Total que pagarías: 6,790 pesos (39% más). "
+            "Impacto en score: Neutral (no sube ni baja). "
+            "Recomendación: Si puedes pagar 1,500 pesos, "
+            "reducirías los intereses a 133 pesos y liquidarías en 4 meses."
         )
     elif monto == "total" or monto == "4850":
         return (
-            "Simulación - Pago total ($4,850 MXN):\n"
-            "- Saldo restante: $0.00 MXN\n"
-            "- Intereses que se generarán: $0.00 MXN\n"
-            "- Crédito disponible: $12,000.00 MXN\n"
-            "- Impacto en score: Positivo (+5 a +10 puntos)\n"
-            "- Utilización de crédito: 0% (excelente)\n\n"
-            "✅ ¡Excelente decisión! Pagar el total es la mejor forma "
+            "Simulación del pago total de 4,850 pesos: "
+            "Saldo restante: 0 pesos. "
+            "Intereses que se generarán: 0 pesos. "
+            "Crédito disponible: 12,000 pesos. "
+            "Impacto en score: Positivo (+5 a +10 puntos). "
+            "Utilización de crédito: 0% (excelente). "
+            "Excelente decisión! Pagar el total es la mejor forma "
             "de construir historial sin pagar intereses."
         )
     else:
-        return (
-            f"Simulación - Pago de ${monto} MXN:\n"
-            f"- Saldo restante: ${4850 - int(monto):.2f} MXN\n"
-            f"- Intereses sobre saldo restante: ~${(4850 - int(monto)) * 0.05:.2f} MXN\n"
-            "- Impacto en score: Ligeramente positivo\n"
-            f"- Utilización después del pago: {((4850 - int(monto)) / 12000) * 100:.0f}%\n\n"
-            "💡 Tip: Entre más pagues arriba del mínimo, menos intereses generas "
-            "y más rápido crece tu score."
-        )
+        try:
+            monto_num = int(monto)
+            saldo_restante = 4850 - monto_num
+            intereses = saldo_restante * 0.05
+            utilizacion = (saldo_restante / 12000) * 100
+            return (
+                f"Simulación de un pago de {monto_num:,} pesos: "
+                f"Saldo restante: {saldo_restante:,} pesos. "
+                f"Intereses sobre saldo restante: aproximadamente {intereses:.0f} pesos. "
+                "Impacto en score: Ligeramente positivo. "
+                f"Utilización después del pago: {utilizacion:.0f}%. "
+                "Tip: Entre más pagues arriba del mínimo, menos intereses generas "
+                "y más rápido crece tu score."
+            )
+        except ValueError:
+            return "No pude entender el monto. Puedes decirme cuántos pesos quieres simular?"
 
 @tool
 def obtener_tips_financieros(tema: str) -> str:
@@ -156,55 +162,55 @@ def obtener_tips_financieros(tema: str) -> str:
     """
     tips = {
         "credito": (
-            "Tips para mejorar tu historial crediticio:\n"
-            "1. Paga siempre antes de la fecha límite (aunque sea el mínimo)\n"
-            "2. Intenta no usar más del 30% de tu límite de crédito\n"
-            "3. No solicites muchos créditos al mismo tiempo\n"
-            "4. Revisa tu Buró de Crédito cada 6 meses (es gratis una vez al año)\n"
-            "5. Si puedes, paga el total para evitar intereses\n\n"
+            "Tips para mejorar tu historial crediticio: "
+            "Primero, paga siempre antes de la fecha límite, aunque sea el mínimo. "
+            "Segundo, intenta no usar más del 30% de tu límite de crédito. "
+            "Tercero, no solicites muchos créditos al mismo tiempo. "
+            "Cuarto, revisa tu Buró de Crédito cada 6 meses, es gratis una vez al año. "
+            "Quinto, si puedes, paga el total para evitar intereses. "
             "Con tu Stori, cada pago a tiempo suma puntos a tu historial. "
             "En 12 meses de buen comportamiento puedes subir hasta 100 puntos."
         ),
         "ahorro": (
-            "Tips para ahorrar con tu Stori:\n"
-            "1. Activa tu Stori Cuenta+ y gana 8.20% anual sobre tu ahorro\n"
-            "2. Usa las categorías de cashback para que tu dinero regrese\n"
-            "3. Aprovecha los Meses Sin Intereses para compras grandes\n"
-            "4. Establece un presupuesto: la regla 50/30/20\n"
-            "   - 50% necesidades, 30% gustos, 20% ahorro\n"
-            "5. Programa pagos automáticos para nunca pagar intereses por olvido\n\n"
-            "Tu cashback acumulado este mes ($127.50) se deposita automáticamente. "
-            "¡Es dinero extra sin esfuerzo!"
+            "Tips para ahorrar con tu Stori: "
+            "Primero, activa tu Stori Cuenta+ y gana 8.20% anual sobre tu ahorro. "
+            "Segundo, usa las categorías de cashback para que tu dinero regrese. "
+            "Tercero, aprovecha los Meses Sin Intereses para compras grandes. "
+            "Cuarto, establece un presupuesto con la regla 50/30/20: "
+            "50% necesidades, 30% gustos, 20% ahorro. "
+            "Quinto, programa pagos automáticos para nunca pagar intereses por olvido. "
+            "Tu cashback acumulado este mes de 127.50 pesos se deposita automáticamente. "
+            "Es dinero extra sin esfuerzo!"
         ),
         "deudas": (
-            "Estrategia para manejar deudas:\n"
-            "1. Lista todas tus deudas de menor a mayor (método bola de nieve)\n"
-            "2. Paga el mínimo en todas y el extra en la más pequeña\n"
-            "3. Cuando liquides una, usa ese dinero para la siguiente\n"
-            "4. Evita usar la tarjeta mientras pagas la deuda\n"
-            "5. Si tienes emergencia, usa máximo 10% de tu límite\n\n"
-            "Con tu saldo actual de $4,850, pagando $1,500 mensuales "
-            "quedarías libre en solo 3.5 meses y pagarías solo $175 de intereses."
+            "Estrategia para manejar deudas: "
+            "Primero, lista todas tus deudas de menor a mayor, es el método bola de nieve. "
+            "Segundo, paga el mínimo en todas y el extra en la más pequeña. "
+            "Tercero, cuando liquides una, usa ese dinero para la siguiente. "
+            "Cuarto, evita usar la tarjeta mientras pagas la deuda. "
+            "Quinto, si tienes emergencia, usa máximo 10% de tu límite. "
+            "Con tu saldo actual de 4,850 pesos, pagando 1,500 pesos mensuales "
+            "quedarías libre en solo 3.5 meses y pagarías solo 175 pesos de intereses."
         ),
         "presupuesto": (
-            "Cómo hacer un presupuesto efectivo:\n"
-            "1. Anota todos tus ingresos del mes\n"
-            "2. Separa gastos fijos (renta, servicios, transporte)\n"
-            "3. Define un límite para gastos variables (comida, entretenimiento)\n"
-            "4. Asigna mínimo 10% a ahorro (tu Stori Cuenta+ rinde 8.20%)\n"
-            "5. Revisa cada semana si vas dentro del presupuesto\n\n"
+            "Cómo hacer un presupuesto efectivo: "
+            "Primero, anota todos tus ingresos del mes. "
+            "Segundo, separa gastos fijos como renta, servicios y transporte. "
+            "Tercero, define un límite para gastos variables como comida y entretenimiento. "
+            "Cuarto, asigna mínimo 10% a ahorro. Tu Stori Cuenta+ rinde 8.20%. "
+            "Quinto, revisa cada semana si vas dentro del presupuesto. "
             "Tip Stori: Revisa tus movimientos en la app cada semana. "
             "Ver tus gastos te ayuda a ser más consciente."
         ),
         "emergencias": (
-            "Fondo de emergencia con Stori:\n"
-            "1. Meta: 3 meses de gastos básicos en tu Stori Cuenta+\n"
-            "2. Empieza con $500 al mes (lo importante es el hábito)\n"
-            "3. Tu Cuenta+ te da 8.20% anual, tu dinero crece solo\n"
-            "4. No toques este fondo para gastos normales\n"
-            "5. Si surge una emergencia real, tienes respaldo sin endeudarte\n\n"
-            "Con $500 mensuales, en 12 meses tendrás ~$6,250 "
-            "(incluyendo rendimientos). ¡Es tu red de seguridad!"
+            "Fondo de emergencia con Stori: "
+            "Tu meta debe ser 3 meses de gastos básicos en tu Stori Cuenta+. "
+            "Empieza con 500 pesos al mes, lo importante es el hábito. "
+            "Tu Cuenta+ te da 8.20% anual, tu dinero crece solo. "
+            "No toques este fondo para gastos normales. "
+            "Si surge una emergencia real, tienes respaldo sin endeudarte. "
+            "Con 500 pesos mensuales, en 12 meses tendrás aproximadamente 6,250 pesos "
+            "incluyendo rendimientos. Es tu red de seguridad!"
         ),
     }
     return tips.get(tema, tips["credito"])
@@ -218,19 +224,14 @@ def consultar_promociones_activas() -> str:
         Lista de promociones vigentes
     """
     return (
-        "Promociones activas para ti:\n\n"
-        "🔥 ESTA SEMANA:\n"
-        "• Farmacias: 10% cashback (hasta domingo)\n"
-        "• Amazon: 6 MSI en compras mayores a $1,000\n\n"
-        "📱 SIEMPRE DISPONIBLES:\n"
-        "• Supermercados: 5% cashback\n"
-        "• Gasolina: 3% cashback\n"
-        "• Compras en línea: 2% cashback\n\n"
-        "🎁 ESPECIAL DEL MES:\n"
-        "• Paga tu total antes del día 5 y participa en sorteo de $5,000\n"
-        "• Invita un amigo: ambos reciben $200 de cashback extra\n\n"
-        "💡 Tip: Concentra tus compras de farmacia esta semana "
-        "para maximizar tu cashback."
+        "Promociones activas para ti: "
+        "Esta semana: Farmacias con 10% cashback, válido hasta el domingo. "
+        "Amazon con 6 meses sin intereses en compras mayores a 1,000 pesos. "
+        "Siempre disponibles: Supermercados 5% cashback. Gasolina 3% cashback. "
+        "Compras en línea 2% cashback. "
+        "Especial del mes: Paga tu total antes del día 5 y participa en sorteo de 5,000 pesos. "
+        "Invita un amigo y ambos reciben 200 pesos de cashback extra. "
+        "Tip: Concentra tus compras de farmacia esta semana para maximizar tu cashback."
     )
 
 # Configure Nova Sonic model
@@ -254,13 +255,32 @@ sonic_model = BidiNovaSonicModel(
 # Stori Financial Coach system prompt
 STORI_SYSTEM_PROMPT = """Eres el Coach Financiero de Stori, un asistente de voz inteligente y empático que ayuda a los clientes de Stori a manejar mejor sus finanzas y construir su historial crediticio.
 
+IDIOMA Y LOCALIZACIÓN:
+- Hablas SIEMPRE en español mexicano coloquial y amigable
+- TODAS las cantidades de dinero son en PESOS MEXICANOS. NUNCA digas "dólares"
+- La moneda es SIEMPRE pesos mexicanos
+- Para porcentajes usa "por ciento"
+- NUNCA uses la palabra "dollars" ni "dólares". Solo "pesos"
+
+ESTILO DE HABLA MEXICANO:
+- Usa expresiones mexicanas naturales: "órale", "ándale", "qué padre", "va que va", "sale", "híjole"
+- Tutea al cliente, usa "tú" no "usted" (es una app para jóvenes y millennials)
+- Usa muletillas mexicanas con moderación: "mira", "fíjate que", "la neta", "onda"
+- Sé entusiasta pero no exagerado. Ejemplo: "¡Órale, vas súper bien!" en vez de "Excelente progreso"
+- Usa diminutivos cuando sea natural: "tantito", "ratito", "poquito"
+- Para motivar: "¡Échale ganas!", "¡Tú puedes!", "Va que va"
+- Para empatizar: "Te entiendo perfecto", "No te preocupes", "Aquí andamos para ayudarte"
+- Habla como un amigo de confianza que sabe de finanzas, no como un ejecutivo bancario
+- Mantén un ritmo conversacional relajado, no robótico ni formal
+
 PERSONALIDAD:
-- Hablas siempre en español mexicano, de forma cálida, cercana y motivadora
-- Usas un tono amigable pero profesional, como un amigo que sabe de finanzas
-- Celebras los logros del cliente ("¡Vas muy bien!", "¡Excelente decisión!")
+- Eres cálida, cercana, echada pa'delante y motivadora
+- Usas un tono amigable como un cuate que sabe de finanzas
+- Celebras los logros del cliente: "¡Órale, qué bien vas!", "¡Eso es, así se hace!"
 - Nunca juzgas ni haces sentir mal al cliente por sus decisiones financieras
-- Explicas conceptos financieros de forma simple, sin tecnicismos innecesarios
+- Explicas conceptos financieros de forma simple, como se lo explicarías a un amigo
 - Eres paciente y repites información si el cliente lo necesita
+- Usas humor ligero cuando es apropiado para hacer la conversación más amena
 
 CAPACIDADES:
 - Consultar saldo, fechas de pago y estado de cuenta
@@ -277,15 +297,18 @@ REGLAS IMPORTANTES:
 - Siempre termina con una pregunta o sugerencia accionable
 - Menciona beneficios de Stori cuando sea relevante y natural
 - Si el cliente suena preocupado por dinero, sé especialmente empático y ofrece soluciones concretas
+- NUNCA uses asteriscos, markdown ni formato especial en tus respuestas. Solo texto plano.
+- Usa números para cantidades: "4,850 pesos" no "cuatro mil ochocientos cincuenta pesos"
+- REPITO: Todas las cantidades son en PESOS MEXICANOS. Nunca menciones dólares.
 
 CONTEXTO DE STORI:
 - Stori es una tarjeta de crédito para personas que están construyendo su historial crediticio en México
-- Ofrece: tarjeta sin anualidad, cashback, Meses Sin Intereses, Stori Cuenta+ (ahorro al 8.20%)
+- Ofrece: tarjeta sin anualidad, cashback, Meses Sin Intereses, Stori Cuenta+ (ahorro al 8 punto 20 por ciento)
 - Más de 5 millones de mexicanos ya usan Stori
 - La misión es dar acceso a crédito a quienes los bancos tradicionales rechazan
 
 INICIO DE CONVERSACIÓN:
-Cuando el cliente se conecte, salúdalo calidamente y pregunta en qué le puedes ayudar hoy. Ejemplo: "¡Hola! Soy tu Coach Financiero de Stori. ¿En qué te puedo ayudar hoy? Puedo revisar tu cuenta, darte tips para mejorar tu historial, o ayudarte a planear tus pagos."
+Cuando el cliente se conecte, salúdalo con calidez mexicana y pregunta en qué le puedes echar la mano. Ejemplo: "¡Hola! ¿Qué onda? Soy tu Coach Financiero de Stori. ¿En qué te echo la mano hoy? Puedo checar tu cuenta, darte tips para mejorar tu historial, o ayudarte a planear tus pagos. Tú dime."
 """
 
 # Health check endpoint
@@ -300,7 +323,6 @@ async def voice_chat(websocket: WebSocket) -> None:
     """
     WebSocket endpoint for Stori Financial Coach voice streaming.
     """
-    # Create a new agent instance for this connection
     voice_agent = BidiAgent(
         model=sonic_model,
         tools=[
