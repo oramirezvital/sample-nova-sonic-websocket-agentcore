@@ -39,10 +39,15 @@ function App() {
       {/* Navigation */}
       <nav className="stori-nav">
         <div className="stori-nav__brand">
-          <div className="stori-nav__logo">S</div>
+          <img 
+            src="/stori-logo-vector.fd330f3f.svg" 
+            alt="Stori" 
+            className="stori-nav__logo" 
+          />
+          <div className="stori-nav__divider" />
           <div>
-            <div className="stori-nav__title">Stori Coach Financiero</div>
-            <div className="stori-nav__subtitle">Tu aliado financiero con IA</div>
+            <div className="stori-nav__title">Coach Financiero</div>
+            <div className="stori-nav__subtitle">Asistente de voz con IA</div>
           </div>
         </div>
         <div className="stori-nav__badge">
@@ -156,6 +161,9 @@ function App() {
               </button>
             </div>
           )}
+          <div className="stori-powered">
+            Powered by <span className="stori-powered__aws">Amazon Bedrock AgentCore</span> + Nova Sonic
+          </div>
         </div>
       </div>
 
@@ -165,19 +173,19 @@ function App() {
           position: 'fixed',
           top: '80px',
           left: '50%',
-          transform: 'translateX(-50%)',
-          background: '#1C2128',
-          border: '1px solid rgba(255, 82, 82, 0.3)',
+          transform: 'translateX(-50)',
+          background: '#FFFFFF',
+          border: '1px solid rgba(229, 57, 53, 0.2)',
           borderRadius: '12px',
           padding: '12px 20px',
-          color: '#FF8A80',
+          color: '#C62828',
           fontSize: '13px',
           zIndex: 200,
           maxWidth: '400px',
           display: 'flex',
           alignItems: 'center',
           gap: '8px',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
         }}>
           <span>⚠️</span>
           {voiceAgent.error}
@@ -186,7 +194,7 @@ function App() {
             style={{
               background: 'none',
               border: 'none',
-              color: '#8B949E',
+              color: '#8A9BA0',
               cursor: 'pointer',
               marginLeft: '8px',
               fontSize: '16px',

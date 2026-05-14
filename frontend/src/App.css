@@ -1,33 +1,26 @@
 /* ============================================
-   STORI FINANCIAL COACH - Custom UI
+   STORI FINANCIAL COACH - White Theme
    ============================================ */
 
 .stori-app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--stori-dark);
+  background: var(--stori-bg);
   position: relative;
 }
 
-/* Ambient background effect */
+/* Subtle background pattern */
 .stori-app::before {
   content: '';
   position: fixed;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(
-    ellipse at 30% 20%,
-    rgba(0, 200, 83, 0.03) 0%,
-    transparent 50%
-  ),
-  radial-gradient(
-    ellipse at 70% 80%,
-    rgba(0, 200, 83, 0.02) 0%,
-    transparent 40%
-  );
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(ellipse at 20% 0%, rgba(0, 200, 83, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(0, 58, 64, 0.02) 0%, transparent 40%);
   pointer-events: none;
   z-index: 0;
 }
@@ -38,9 +31,8 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-md) var(--space-xl);
-  border-bottom: 1px solid var(--stori-dark-border);
-  background: var(--stori-dark-surface);
-  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--stori-border);
+  background: var(--stori-bg);
   position: sticky;
   top: 0;
   z-index: 100;
@@ -53,27 +45,25 @@
 }
 
 .stori-nav__logo {
-  width: 32px;
-  height: 32px;
-  background: var(--stori-gradient);
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 800;
-  font-size: 14px;
-  color: var(--stori-dark);
+  height: 28px;
+  width: auto;
+}
+
+.stori-nav__divider {
+  width: 1px;
+  height: 24px;
+  background: var(--stori-border);
 }
 
 .stori-nav__title {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--stori-text-primary);
   letter-spacing: -0.02em;
 }
 
 .stori-nav__subtitle {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--stori-text-secondary);
   font-weight: 400;
 }
@@ -84,11 +74,11 @@
   gap: 6px;
   padding: 6px 12px;
   background: var(--stori-accent-glow);
-  border: 1px solid rgba(0, 200, 83, 0.2);
+  border: 1px solid rgba(0, 200, 83, 0.15);
   border-radius: var(--radius-full);
   font-size: 11px;
   font-weight: 600;
-  color: var(--stori-green-light);
+  color: var(--stori-green-dark);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -136,7 +126,7 @@
   width: 80px;
   height: 80px;
   background: var(--stori-gradient-subtle);
-  border: 2px solid rgba(0, 200, 83, 0.2);
+  border: 2px solid rgba(0, 200, 83, 0.12);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -159,10 +149,7 @@
 }
 
 .stori-welcome__heading span {
-  background: var(--stori-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--stori-green-dark);
 }
 
 .stori-welcome__description {
@@ -185,8 +172,8 @@
   align-items: center;
   gap: var(--space-sm);
   padding: var(--space-md);
-  background: var(--stori-dark-surface);
-  border: 1px solid var(--stori-dark-border);
+  background: var(--stori-bg-secondary);
+  border: 1px solid var(--stori-border);
   border-radius: var(--radius-md);
   font-size: 13px;
   color: var(--stori-text-secondary);
@@ -195,7 +182,8 @@
 
 .stori-welcome__feature:hover {
   border-color: rgba(0, 200, 83, 0.3);
-  background: var(--stori-dark-elevated);
+  background: var(--stori-bg);
+  box-shadow: var(--shadow-sm);
 }
 
 .stori-welcome__feature-icon {
@@ -257,13 +245,13 @@
 }
 
 .stori-bubble--assistant .stori-bubble__avatar {
-  background: var(--stori-gradient);
-  color: var(--stori-dark);
+  background: var(--stori-teal);
+  color: var(--stori-text-inverse);
 }
 
 .stori-bubble--user .stori-bubble__avatar {
-  background: var(--stori-dark-elevated);
-  border: 1px solid var(--stori-dark-border);
+  background: var(--stori-bg-secondary);
+  border: 1px solid var(--stori-border);
   color: var(--stori-text-secondary);
 }
 
@@ -276,15 +264,15 @@
 }
 
 .stori-bubble--assistant .stori-bubble__content {
-  background: var(--stori-dark-surface);
-  border: 1px solid var(--stori-dark-border);
+  background: var(--stori-bg-secondary);
+  border: 1px solid var(--stori-border);
   color: var(--stori-text-primary);
   border-bottom-left-radius: var(--space-xs);
 }
 
 .stori-bubble--user .stori-bubble__content {
-  background: var(--stori-green);
-  color: var(--stori-dark);
+  background: var(--stori-teal);
+  color: var(--stori-text-inverse);
   font-weight: 500;
   border-bottom-right-radius: var(--space-xs);
 }
@@ -294,7 +282,7 @@
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: var(--space-md) var(--space-lg);
+  padding: var(--space-sm) 0;
 }
 
 .stori-typing__dot {
@@ -320,7 +308,7 @@
   left: 0;
   right: 0;
   padding: var(--space-lg) var(--space-md);
-  background: linear-gradient(to top, var(--stori-dark) 60%, transparent);
+  background: linear-gradient(to top, var(--stori-bg) 70%, transparent);
   display: flex;
   justify-content: center;
   z-index: 50;
@@ -335,10 +323,10 @@
 .stori-btn-start {
   width: 100%;
   padding: 16px var(--space-xl);
-  background: var(--stori-gradient);
+  background: var(--stori-teal);
   border: none;
   border-radius: var(--radius-lg);
-  color: var(--stori-dark);
+  color: var(--stori-text-inverse);
   font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 16px;
   font-weight: 700;
@@ -348,13 +336,14 @@
   justify-content: center;
   gap: var(--space-sm);
   transition: all 0.2s ease;
-  box-shadow: 0 4px 24px rgba(0, 200, 83, 0.3);
+  box-shadow: var(--shadow-lg);
   letter-spacing: -0.02em;
 }
 
 .stori-btn-start:hover {
   transform: translateY(-1px);
-  box-shadow: 0 8px 32px rgba(0, 200, 83, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 58, 64, 0.2);
+  background: var(--stori-teal-light);
 }
 
 .stori-btn-start:active {
@@ -372,20 +361,20 @@
 .stori-recording-bar {
   width: 100%;
   padding: 12px var(--space-lg);
-  background: var(--stori-dark-surface);
+  background: var(--stori-bg);
   border: 2px solid var(--stori-green);
   border-radius: var(--radius-lg);
   display: flex;
   align-items: center;
   gap: var(--space-md);
-  box-shadow: 0 0 24px var(--stori-accent-glow);
+  box-shadow: var(--shadow-green);
 }
 
 .stori-recording-bar__indicator {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: var(--stori-green);
+  color: var(--stori-green-dark);
   font-size: 13px;
   font-weight: 600;
   flex-shrink: 0;
@@ -433,8 +422,8 @@
 .stori-recording-bar__stop {
   width: 36px;
   height: 36px;
-  background: rgba(255, 82, 82, 0.1);
-  border: 1px solid rgba(255, 82, 82, 0.3);
+  background: rgba(255, 82, 82, 0.06);
+  border: 1px solid rgba(255, 82, 82, 0.2);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -445,15 +434,32 @@
 }
 
 .stori-recording-bar__stop:hover {
-  background: rgba(255, 82, 82, 0.2);
-  border-color: rgba(255, 82, 82, 0.5);
+  background: rgba(255, 82, 82, 0.12);
+  border-color: rgba(255, 82, 82, 0.4);
 }
 
 .stori-recording-bar__stop-icon {
   width: 12px;
   height: 12px;
-  background: #FF5252;
+  background: #E53935;
   border-radius: 2px;
+}
+
+/* ---- POWERED BY FOOTER ---- */
+.stori-powered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: var(--space-sm) 0;
+  font-size: 11px;
+  color: var(--stori-text-muted);
+  margin-top: var(--space-md);
+}
+
+.stori-powered__aws {
+  font-weight: 600;
+  color: var(--stori-text-secondary);
 }
 
 /* ---- RESPONSIVE ---- */
