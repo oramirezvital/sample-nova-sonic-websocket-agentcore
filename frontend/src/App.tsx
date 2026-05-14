@@ -1,53 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import AppLayout from '@cloudscape-design/components/app-layout';
-import TopNavigation from '@cloudscape-design/components/top-navigation';
-import ContentLayout from '@cloudscape-design/components/content-layout';
-import Container from '@cloudscape-design/components/container';
-import SpaceBetween from '@cloudscape-design/components/space-between';
-import Box from '@cloudscape-design/components/box';
-import Button from '@cloudscape-design/components/button';
-import Grid from '@cloudscape-design/components/grid';
-import ChatBubble from '@cloudscape-design/chat-components/chat-bubble';
-import Avatar from '@cloudscape-design/chat-components/avatar';
-import LoadingBar from '@cloudscape-design/chat-components/loading-bar';
-import LiveRegion from '@cloudscape-design/components/live-region';
-import Icon from '@cloudscape-design/components/icon';
-import Alert from '@cloudscape-design/components/alert';
-import Flashbar from '@cloudscape-design/components/flashbar';
 import { useVoiceAgent } from './hooks/useVoiceAgent';
-import { getCurrentUser, signOut } from './auth';
-
-interface AuthUser {
-  email: string;
-}
+import './App.css';
 
 function App() {
-  const isLocalDev = (import.meta as any).env.VITE_LOCAL_DEV === 'true';
-
-  // Voice agent hook
   const voiceAgent = useVoiceAgent();
-
-  // Ref for auto-scrolling chat container
   const chatContainerRef = useRef<HTMLDivElement>(null);
-
-  // All hooks declared at the top level to maintain consistent order
-  const [error, setError] = useState('');
-  const [user, setUser] = useState<AuthUser | null>(null);
-  const [showAuthModal, setShowAuthModal] = useState(false);
-  const [checkingAuth, setCheckingAuth] = useState(true);
-  const [AuthModalComponent, setAuthModalComponent] = useState<any>(null);
-  const [showWelcomeFlashbar, setShowWelcomeFlashbar] = useState(true);
-
-  // Authentication effect
-  useEffect(() => {
-    if (isLocalDev) {
-      // Skip authentication in local development mode
-      setCheckingAuth(false);
-      setUser({ email: 'local-dev@example.com' } as AuthUser);
-    } else {
-      checkAuth();
-    }
-  }, [isLocalDev]);
+  const [isConnecting, setIsConnecting] = useState(false);
 
   // Auto-scroll to bottom when conversation history changes
   useEffect(() => {
@@ -56,53 +14,11 @@ function App() {
     }
   }, [voiceAgent.conversationHistory, voiceAgent.isSpeaking]);
 
-  // AuthModal loading effect
-  useEffect(() => {
-    if (!isLocalDev && showAuthModal && !AuthModalComponent) {
-      import('./AuthModal').then(module => {
-        setAuthModalComponent(() => module.default);
-      });
-    }
-  }, [showAuthModal, AuthModalComponent, isLocalDev]);
-
-  const checkAuth = async () => {
-    if (isLocalDev) return;
-
-    try {
-      const currentUser = await getCurrentUser();
-      setUser(currentUser);
-    } catch (err) {
-      setUser(null);
-    } finally {
-      setCheckingAuth(false);
-    }
-  };
-
-  const handleSignOut = async () => {
-    if (isLocalDev) return;
-
-    try {
-      signOut();
-    } catch (err) {
-      console.error('Error signing out:', err);
-    }
-    setUser(null);
-  };
-
-  const handleAuthSuccess = async () => {
-    setShowAuthModal(false);
-    await checkAuth();
-  };
-
-  const [isConnecting, setIsConnecting] = useState(false);
-
-  const handleMainClick = async () => {
+  const handleStart = async () => {
     if (!voiceAgent.isConnected && !isConnecting) {
-      setShowWelcomeFlashbar(false); // Dismiss flashbar when starting
       setIsConnecting(true);
       try {
         await voiceAgent.connect();
-        // Auto-start recording after connection
         setTimeout(() => {
           voiceAgent.startRecording();
         }, 1000);
@@ -112,255 +28,175 @@ function App() {
     }
   };
 
-  const handleStop = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleStop = () => {
     voiceAgent.disconnect();
   };
 
-  if (checkingAuth) {
-    return (
-      <>
-        <TopNavigation
-          identity={{
-            href: "#",
-            title: "Nova Sonic Voice Agent"
-          }}
-          utilities={[
-            {
-              type: "button",
-              text: user ? `${user.email} | Sign Out` : "Sign In",
-              iconName: user ? "user-profile" : "lock-private",
-              onClick: () => {
-                if (user) {
-                  handleSignOut();
-                } else {
-                  setShowAuthModal(true);
-                }
-              }
-            }
-          ]}
-          i18nStrings={{
-            overflowMenuTriggerText: "More",
-            overflowMenuTitleText: "All"
-          }}
-        />
-        <AppLayout
-          navigationHide={true}
-          toolsHide={true}
-          disableContentPaddings
-          contentType="default"
-          content={
-            <ContentLayout defaultPadding>
-              <Box textAlign="center" padding="xxl">
-                Loading...
-              </Box>
-            </ContentLayout>
-          }
-        />
-      </>
-    );
-  }
+  const hasMessages = voiceAgent.conversationHistory.length > 0;
 
   return (
-    <>
-      {!isLocalDev && AuthModalComponent && (
-        <AuthModalComponent
-          visible={showAuthModal}
-          onDismiss={() => setShowAuthModal(false)}
-          onSuccess={handleAuthSuccess}
-        />
-      )}
-      <TopNavigation
-        identity={{
-          href: "#",
-          title: isLocalDev
-            ? "Nova Sonic Voice Agent (Local Dev)"
-            : "Nova Sonic Voice Agent"
-        }}
-        utilities={isLocalDev ? [
-          {
-            type: "button",
-            text: "Local Development",
-            iconName: "settings"
-          }
-        ] : [
-          {
-            type: "button",
-            text: user ? `${user.email} | Sign Out` : "Sign In",
-            iconName: user ? "user-profile" : "lock-private",
-            onClick: () => {
-              if (user) {
-                handleSignOut();
-              } else {
-                setShowAuthModal(true);
-              }
-            }
-          }
-        ]}
-        i18nStrings={{
-          overflowMenuTriggerText: "More",
-          overflowMenuTitleText: "All"
-        }}
-      />
-      <AppLayout
-        navigationHide={true}
-        toolsHide={true}
-        disableContentPaddings
-        contentType="default"
-        content={
-          <ContentLayout defaultPadding>
-            <Grid
-              gridDefinition={[
-                { colspan: { default: 12, xs: 1, s: 2 } },
-                { colspan: { default: 12, xs: 10, s: 8 } },
-                { colspan: { default: 12, xs: 1, s: 2 } }
-              ]}
+    <div className="stori-app">
+      {/* Navigation */}
+      <nav className="stori-nav">
+        <div className="stori-nav__brand">
+          <div className="stori-nav__logo">S</div>
+          <div>
+            <div className="stori-nav__title">Stori Coach Financiero</div>
+            <div className="stori-nav__subtitle">Tu aliado financiero con IA</div>
+          </div>
+        </div>
+        <div className="stori-nav__badge">
+          PoC Demo
+        </div>
+      </nav>
+
+      {/* Main Content */}
+      <main className="stori-main">
+        {!hasMessages && !voiceAgent.isRecording ? (
+          /* Welcome State */
+          <div className="stori-welcome">
+            <div className="stori-welcome__icon">🎙️</div>
+            <h1 className="stori-welcome__heading">
+              Tu <span>Coach Financiero</span><br />siempre disponible
+            </h1>
+            <p className="stori-welcome__description">
+              Habla con tu asistente de voz para consultar tu saldo, 
+              recibir tips para mejorar tu historial crediticio, 
+              y aprovechar al máximo tu Stori.
+            </p>
+            <div className="stori-welcome__features">
+              <div className="stori-welcome__feature">
+                <span className="stori-welcome__feature-icon">💳</span>
+                Consulta tu saldo y pagos
+              </div>
+              <div className="stori-welcome__feature">
+                <span className="stori-welcome__feature-icon">📈</span>
+                Mejora tu score crediticio
+              </div>
+              <div className="stori-welcome__feature">
+                <span className="stori-welcome__feature-icon">💰</span>
+                Maximiza tu cashback
+              </div>
+              <div className="stori-welcome__feature">
+                <span className="stori-welcome__feature-icon">🎓</span>
+                Tips financieros personalizados
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* Chat Area */
+          <div className="stori-chat">
+            <div className="stori-chat__messages" ref={chatContainerRef}>
+              {voiceAgent.conversationHistory.map((turn, index) => (
+                <div
+                  key={`msg-${index}`}
+                  className={`stori-bubble stori-bubble--${turn.role}`}
+                >
+                  <div className="stori-bubble__avatar">
+                    {turn.role === 'assistant' ? 'S' : '👤'}
+                  </div>
+                  <div className="stori-bubble__content">
+                    {turn.transcript}
+                  </div>
+                </div>
+              ))}
+              {voiceAgent.isSpeaking && (
+                <div className="stori-bubble stori-bubble--assistant">
+                  <div className="stori-bubble__avatar">S</div>
+                  <div className="stori-bubble__content">
+                    <div className="stori-typing">
+                      <div className="stori-typing__dot" />
+                      <div className="stori-typing__dot" />
+                      <div className="stori-typing__dot" />
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </main>
+
+      {/* Bottom Controls */}
+      <div className="stori-controls">
+        <div className="stori-controls__inner">
+          {!voiceAgent.isRecording ? (
+            <button
+              className="stori-btn-start"
+              onClick={handleStart}
+              disabled={isConnecting || voiceAgent.isConnected}
             >
-              <div />
-              <SpaceBetween size="l">
-                {voiceAgent.error ? (
-                  <Alert 
-                    type="error" 
-                    dismissible 
-                    onDismiss={voiceAgent.clearError}
-                  >
-                    {voiceAgent.error}
-                  </Alert>
-                ) : null}
-                {error ? (
-                  <Alert type="error" dismissible onDismiss={() => setError('')}>
-                    {error}
-                  </Alert>
-                ) : null}
-                {voiceAgent.conversationHistory.length === 0 && showWelcomeFlashbar && (
-                  <Flashbar
-                    items={[
-                      {
-                        type: 'info',
-                        content: user 
-                          ? 'Start a voice conversation with the AI assistant. Click "Start Chatting" below to begin.'
-                          : 'Start a voice conversation with the AI assistant. Sign in or sign up to start chatting.',
-                        dismissible: true,
-                        onDismiss: () => setShowWelcomeFlashbar(false),
-                      }
-                    ]}
+              {isConnecting || (voiceAgent.isConnected && !voiceAgent.isRecording) ? (
+                <>
+                  <span>⏳</span> Conectando...
+                </>
+              ) : (
+                <>
+                  <span>🎙️</span> Hablar con mi Coach Financiero
+                </>
+              )}
+            </button>
+          ) : (
+            <div className="stori-recording-bar">
+              <div className="stori-recording-bar__indicator">
+                <div className="stori-recording-bar__dot" />
+                Escuchando
+              </div>
+              <div className="stori-recording-bar__visualizer">
+                {Array.from({ length: 24 }).map((_, i) => (
+                  <div
+                    key={i}
+                    className="stori-recording-bar__bar"
+                    style={{ animationDelay: `${i * 0.05}s` }}
                   />
-                )}
-                <Container>
-                  <SpaceBetween size="m">
-                    {/* Chat History Area */}
-                    <div 
-                      ref={chatContainerRef}
-                      style={{ minHeight: '300px', maxHeight: '500px', overflowY: 'auto' }}
-                    >
-                      {voiceAgent.conversationHistory.length === 0 ? null : (
-                        <SpaceBetween size="xs">
-                          {voiceAgent.conversationHistory.map((turn, index) => {
-                            // Show loading bar on last assistant message if agent is still speaking
-                            const showLoading = 
-                              turn.role === 'assistant' && 
-                              index === voiceAgent.conversationHistory.length - 1 &&
-                              voiceAgent.isSpeaking;
+                ))}
+              </div>
+              <button className="stori-recording-bar__stop" onClick={handleStop}>
+                <div className="stori-recording-bar__stop-icon" />
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
 
-                            return (
-                              <ChatBubble
-                                key={`history-${index}`}
-                                type={turn.role === 'user' ? 'outgoing' : 'incoming'}
-                                ariaLabel={`${turn.role === 'user' ? 'User' : 'AI Assistant'} message at ${new Date().toLocaleTimeString()}`}
-                                showLoadingBar={showLoading}
-                                avatar={
-                                  turn.role === 'user' ? (
-                                    <Avatar 
-                                      ariaLabel="Benjamin Lecoq" 
-                                      tooltipText="Benjamin Lecoq"
-                                      initials="BL" 
-                                    />
-                                  ) : (
-                                    <Avatar 
-                                      ariaLabel="Generative AI assistant" 
-                                      tooltipText="Generative AI assistant"
-                                      iconName="gen-ai" 
-                                      color="gen-ai" 
-                                    />
-                                  )
-                                }
-                              >
-                                {turn.transcript}
-                              </ChatBubble>
-                            );
-                          })}
-                        </SpaceBetween>
-                      )}
-                    </div>
-
-                    {/* Fixed Button with Nested Audio Bar */}
-                    <div style={{ borderTop: '1px solid #e9ebed', paddingTop: '16px' }}>
-                      {!voiceAgent.isRecording ? (
-                        <Button
-                          variant="primary"
-                          iconName="microphone"
-                          onClick={handleMainClick}
-                          fullWidth
-                          disabled={!user || isConnecting || voiceAgent.isConnected}
-                          loading={isConnecting || (voiceAgent.isConnected && !voiceAgent.isRecording)}
-                        >
-                          {isConnecting || (voiceAgent.isConnected && !voiceAgent.isRecording) ? 'Connecting...' : 'Start Chatting'}
-                        </Button>
-                      ) : (
-                        <div
-                          style={{
-                            width: '100%',
-                            padding: '10px 12px',
-                            border: '2px solid #0972d3',
-                            borderRadius: '8px',
-                            backgroundColor: '#ffffff',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            boxSizing: 'border-box',
-                            minHeight: '40px'
-                          }}
-                        >
-                          {/* Microphone Icon */}
-                          <div style={{ 
-                            flexShrink: 0,
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            color: '#0972d3'
-                          }}>
-                            <Icon name="microphone" size="normal" />
-                          </div>
-
-                          {/* Audio Bar (nested inside button) */}
-                          <div style={{ 
-                            flex: 1,
-                            minWidth: 0,
-                            overflow: 'hidden'
-                          }}>
-                            <LiveRegion>
-                              <LoadingBar variant="gen-ai" />
-                            </LiveRegion>
-                          </div>
-
-                          <Button
-                            variant="icon"
-                            iconName="stop-circle"
-                            onClick={handleStop}
-                            ariaLabel="Stop conversation"
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </SpaceBetween>
-                </Container>
-              </SpaceBetween>
-              <div />
-            </Grid>
-          </ContentLayout>
-        }
-      />
-    </>
+      {/* Error Toast */}
+      {voiceAgent.error && (
+        <div style={{
+          position: 'fixed',
+          top: '80px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          background: '#1C2128',
+          border: '1px solid rgba(255, 82, 82, 0.3)',
+          borderRadius: '12px',
+          padding: '12px 20px',
+          color: '#FF8A80',
+          fontSize: '13px',
+          zIndex: 200,
+          maxWidth: '400px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.4)',
+        }}>
+          <span>⚠️</span>
+          {voiceAgent.error}
+          <button
+            onClick={voiceAgent.clearError}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: '#8B949E',
+              cursor: 'pointer',
+              marginLeft: '8px',
+              fontSize: '16px',
+            }}
+          >
+            ✕
+          </button>
+        </div>
+      )}
+    </div>
   );
 }
 
